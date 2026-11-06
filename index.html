@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descubra sua sexualidade</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #16002e, #510080, #c026d3);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff12;
+    backdrop-filter: blur(15px);
+    border: 1px solid #ffffff30;
+    padding: 30px;
+    border-radius: 22px;
+    width: 100%;
+    max-width: 430px;
+    text-align: center;
+    box-shadow: 0 10px 40px #0005;
+}
+
+h1 {
+    font-size: 27px;
+}
+
+p {
+    color: #eee;
+    line-height: 1.5;
+}
+
+.progress {
+    background: #ffffff30;
+    height: 8px;
+    border-radius: 20px;
+    margin: 25px 0;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    width: 0%;
+    background: #ff4de1;
+    transition: .3s;
+}
+
+.question {
+    font-size: 21px;
+    min-height: 75px;
+    margin: 25px 0;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    transform: scale(1.04);
+}
+
+.yes {
+    background: #e040fb;
+    color: white;
+}
+
+.no {
+    background: white;
+    color: #6a008e;
+}
+
+#result {
+    display: none;
+}
+
+.percent {
+    font-size: 65px;
+    font-weight: bold;
+    color: #ff72ec;
+    margin: 20px;
+}
+
+.restart {
+    background: #fff;
+    color: #65008d;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="start">
+      <h1>Feito por Josué Calebe</h1>
+<h1>
+<span onclick="ativarMachoAlfa()" style="cursor:pointer">🌈</span>
+TESTE DEFINITIVO
+</h1>        <h2>Você é GAY?</h2>
+        <p>
+            Responda essas 10 perguntas 
+            e descubra o resultado do teste criado por Josué Calebe.
+        </p>
+        <button class="yes" onclick="startQuiz()">
+            COMEÇAR TESTE
+        </button>
+    </div>
+
+    <div id="quiz" style="display:none">
+
+        <h2>Descobrindo...</h2>
+
+        <p id="counter">Pergunta 1 de 10</p>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+        <div class="question" id="question"></div>
+
+        <button class="yes" onclick="answer('sim')">
+            SIM
+        </button>
+
+        <button class="no" onclick="answer('nao')">
+            NÃO
+        </button>
+
+    </div>
+
+    <div id="result">
+
+        <h1>🏳️‍🌈 RESULTADO FINAL</h1>
+
+        <p>Sua probabilidade de ser GAY é:</p>
+
+        <div class="percent" id="percentage">90%</div>
+
+        <h2 id="classification"></h2>
+
+        <p id="message"></p>
+
+        <button class="restart" onclick="location.reload()">
+            FAZER NOVAMENTE
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const questions = [
+    "Você tem entre 16 e 25 anos?",
+    "Já elogiou a aparência de outro homem?",
+    "Curte Sair pra comer ou beber com amigos homens?",
+    "Você gosta de receber elogios de outros homens?",
+    "Já ficou nervoso perto de alguém do mesmo sexo?",
+    "Pratíca algum esporte de contato com seus amigos?",
+    "Esse ano você votou no Lula?",
+    "Já achou algum personagem masculino atraente?",
+    "Você acredita que beleza não tem gênero?",
+    "Seu Nome corresponde a algum desses(Tarik ou Giovane)? 👀"
+];
+
+let current = 0;
+let answers = [];
+let modoMachoAlfa = false;
+
+function ativarMachoAlfa() {
+    modoMachoAlfa = true;
+    alert("🐺 MODO MACHO ALFA ATIVADO!");
+}
+
+function startQuiz() {
+    document.getElementById("start").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById("question").innerText =
+        questions[current];
+
+    document.getElementById("counter").innerText =
+        `Pergunta ${current + 1} de 10`;
+
+    document.getElementById("bar").style.width =
+        (current / 10 * 100) + "%";
+}
+
+function answer(value) {
+    answers.push(value);
+    current++;
+
+    if (current < questions.length) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    // Resultado humorístico: sempre entre 90% e 100%
+   const percentage = modoMachoAlfa
+    ? 0
+    : (answers[9] === "sim" ? 100 : 60 + Math.floor(Math.random() * 40));
+
+    document.getElementById("percentage").innerText =
+        percentage + "%";
+
+   document.getElementById("classification").innerText =
+    modoMachoAlfa ? "🐺 ALERTA MACHO ALFA!" : "🌈 ALERTA COLORIDO!";
+
+document.getElementById("message").innerText =
+    modoMachoAlfa
+    ? "VOCÊ DESBLOQUEOU O MODO MACHO ALFA! 🗿🔥"
+    : "Você desbloqueou o resultado especial! 😂";
+}
+
+</script>
+
+</body>
+</html>
